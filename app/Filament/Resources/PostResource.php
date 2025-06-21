@@ -56,7 +56,7 @@ class PostResource extends Resource
                     TextInput::make('slug')->unique(Post::class,'slug', ignoreRecord:true)->readOnly(),
                     Select::make('category_id')
                     ->options(Category::all()->pluck('name','id'))
-                    ->label('Category'),
+                    ->label('Category')->required(),
                     ColorPicker::make('color'),
                     MarkdownEditor::make('content')->required()->columnSpanFull(),
                 ])->columnSpan(2)->columns(2),
@@ -80,13 +80,27 @@ class PostResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('title')->wrap(),
+                TextColumn::make('id')
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault:true),
+                TextColumn::make('title')->wrap()
+                ->sortable()
+                ->searchable(),
                 TextColumn::make('slug')->wrap(),
-                TextColumn::make('category.name'),
+                TextColumn::make('category.name')
+                 ->sortable()
+                ->searchable(),
                 ColorColumn::make('color'),
                 ImageColumn::make('thumbnail'),
-                TextColumn::make('tags')->wrap(),
+                TextColumn::make('tags')->wrap()
+                ->toggleable(),
                 CheckboxColumn::make('published'),
+                TextColumn::make('created_at')
+                ->label('Published on')
+                ->date()
+                ->sortable()
+                ->searchable()
+                ->toggleable(),
             ])
             ->filters([
                 //
