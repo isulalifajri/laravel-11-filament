@@ -39,3 +39,11 @@ jika ada image jangan lupa jalankan: php artisan storage:link
 http://laravel-11-filament.test/admin/facilities
 ini kan url admin nya otomatis dari filament, nah mau mengubah menjadi seperti ini
 http://laravel-11-filament.test/backend/facilities buka file adminpanelprovider dan ubah path nya menjadi backend
+
+*Relationship manager
+
+php artisan make:filament-relation-manager CategoryResource posts title
+
+di CategoryResource pada fucntion getRelation tambahkan in : PostRelationManager::class
+
+copy isi form pada postResource dan salin ke postsRelationManager -> hapus category_id 

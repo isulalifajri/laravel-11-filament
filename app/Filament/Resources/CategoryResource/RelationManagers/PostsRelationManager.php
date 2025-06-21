@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Resources\CategoryResource\RelationManagers;
 
 use Filament\Forms;
 use App\Models\Post;
@@ -9,34 +9,28 @@ use App\Models\Category;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
-use Filament\Resources\Resource;
+use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Checkbox;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\FileUpload;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\ColorPicker;
-use Filament\Forms\Components\MarkdownEditor;
-use App\Filament\Resources\PostResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\PostResource\RelationManagers;
-use Filament\Forms\Components\Group;
-use Filament\Forms\Components\Section;
 use Filament\Tables\Columns\CheckboxColumn;
-use Filament\Tables\Columns\ColorColumn;
-use Filament\Tables\Columns\ImageColumn;
-use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\MarkdownEditor;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Resources\RelationManagers\RelationManager;
 
-class PostResource extends Resource
+class PostsRelationManager extends RelationManager
 {
-    protected static ?string $model = Post::class;
+    protected static string $relationship = 'posts';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
-    public static function form(Form $form): Form
+    public function form(Form $form): Form
     {
-        return $form
+         return $form
             ->schema([
                 Section::make('Create a Post')
                 ->description('create posts over here')
@@ -54,9 +48,6 @@ class PostResource extends Resource
                         $set('slug',$slug);
                     }),
                     TextInput::make('slug')->unique(Post::class,'slug', ignoreRecord:true)->readOnly(),
-                    Select::make('category_id')
-                    ->options(Category::all()->pluck('name','id'))
-                    ->label('Category')->required(),
                     ColorPicker::make('color'),
                     MarkdownEditor::make('content')->required()->columnSpanFull(),
                 ])->columnSpan(2)->columns(2),
@@ -76,37 +67,22 @@ class PostResource extends Resource
         ])->columns(3);
     }
 
-    public static function table(Table $table): Table
+    public function table(Table $table): Table
     {
         return $table
+            ->recordTitleAttribute('title')
             ->columns([
-                TextColumn::make('id')
-                ->sortable()
-                ->toggleable(isToggledHiddenByDefault:true),
-                TextColumn::make('title')->wrap()
-                ->sortable()
-                ->searchable(),
-                TextColumn::make('slug')->wrap(),
-                TextColumn::make('category.name')
-                 ->sortable()
-                ->searchable(),
-                ColorColumn::make('color'),
-                ImageColumn::make('thumbnail'),
-                TextColumn::make('tags')->wrap()
-                ->toggleable(),
+                Tables\Columns\TextColumn::make('title'),
+                TextColumn::make('slug'),
                 CheckboxColumn::make('published'),
-                TextColumn::make('created_at')
-                ->label('Published on')
-                ->date()
-                ->sortable()
-                ->searchable()
-                ->toggleable(),
             ])
             ->filters([
                 //
             ])
+            ->headerActions([
+                Tables\Actions\CreateAction::make(),
+            ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
@@ -115,21 +91,5 @@ class PostResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-
-    public static function getPages(): array
-    {
-        return [
-            'index' => Pages\ListPosts::route('/'),
-            'create' => Pages\CreatePost::route('/create'),
-            'edit' => Pages\EditPost::route('/{record}/edit'),
-        ];
     }
 }
