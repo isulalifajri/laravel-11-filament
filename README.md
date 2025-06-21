@@ -47,3 +47,5 @@ php artisan make:filament-relation-manager CategoryResource posts title
 di CategoryResource pada fucntion getRelation tambahkan in : PostRelationManager::class
 
 copy isi form pada postResource dan salin ke postsRelationManager -> hapus category_id 
+
+php artisan migrate:refresh --step=1 //artinya merefresh tabel yang terakhir ditambahkan //rollback 1 step yang terbaru

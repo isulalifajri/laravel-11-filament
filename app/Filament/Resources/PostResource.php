@@ -21,6 +21,7 @@ use Filament\Forms\Components\MarkdownEditor;
 use App\Filament\Resources\PostResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\PostResource\RelationManagers;
+use App\Filament\Resources\PostResource\RelationManagers\AuthorsRelationManager;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Section;
 use Filament\Tables\Columns\CheckboxColumn;
@@ -72,6 +73,15 @@ class PostResource extends Resource
                         TagsInput::make('tags')->required(),
                         Checkbox::make('published')->required(),
                     ]),
+                    // Section::make('Authors')
+                    // ->schema([
+                    //     Select::make('authors')
+                    //     ->label('Co Authors')
+                    //     ->relationship('authors','name')
+                    //     ->multiple()
+                    //     ->searchable()
+                    //     ->preload(),
+                    // ]),
                 ]),
         ])->columns(3);
     }
@@ -120,7 +130,7 @@ class PostResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            AuthorsRelationManager::class,
         ];
     }
 

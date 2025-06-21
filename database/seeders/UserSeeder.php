@@ -14,6 +14,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        User::truncate();
         User::factory()->create([
             'name' => 'admin',
             'email' => 'admin@example.com',
@@ -25,5 +26,7 @@ class UserSeeder extends Seeder
             'email' => 'test@example.com',
             'password' => Hash::make('password'),
         ]);
+
+        User::factory(5)->create();
     }
 }
