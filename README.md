@@ -56,4 +56,8 @@ php artisan make:policy CategoryPolicy --model=Category
 
 #navigation Grub// atau membuat submenu
 
-protected static ?string $navigationGroup = namagGroup; -> ini di copy ke resource yang ingin dimasukkan kedalam groupnya. misalkan post resource dan category resource. copy code itu di post dan category resource tepat di bawah navagation icon. 
+protected static ?string $navigationGroup = namagGroup; -> ini di copy ke resource yang ingin dimasukkan kedalam groupnya. misalkan post resource dan category resource. copy code itu di post dan category resource tepat di bawah navagation icon.
+
+protected static ?int $navigationSort = null; -> mengatur urutan menu
+
+contoh jika di post resource gini -> protected static ?int $navigationSort = 1; -> maka menunya akan paling atas
