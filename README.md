@@ -73,3 +73,14 @@ Stat::make('New Users', User::count())
 ->description('New users that have joined')   -> nanti akan memunculkan jumlah usernya di dashboard
 
 kemudian pada adminpanelprovider, di widgets, tambahkan ini : TestWidget::class,
+
+#Charts
+
+php artisan make:filament-widget TestChartWidget
+choose -> chart -> enter -> enter lagi -> admin panel -> line chart
+
+composer require flowframe/laravel-trend
+
+jangan lupa ini di aktifkan di php.ini
+
+extension=intl
