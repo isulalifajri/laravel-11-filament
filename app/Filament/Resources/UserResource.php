@@ -50,6 +50,14 @@ class UserResource extends Resource
                 ->sortable()
                 ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('role')
+                ->badge()
+                ->color(function(string $state) :string{
+                    return match($state){
+                        'ADMIN' => 'danger',
+                        'EDITOR' => 'info',
+                        'USER' => 'success',
+                    };
+                })
                 ->sortable()
                 ->searchable(),
             ])
