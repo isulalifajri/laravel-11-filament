@@ -61,3 +61,15 @@ protected static ?string $navigationGroup = namagGroup; -> ini di copy ke resour
 protected static ?int $navigationSort = null; -> mengatur urutan menu
 
 contoh jika di post resource gini -> protected static ?int $navigationSort = 1; -> maka menunya akan paling atas
+
+#statsWidget
+
+php artisan make:filament-widget TestWidget
+
+kemudian pilih stats overview-> enter -> jika suruh pilih resource tekan enter dan pilih admin panel
+itu nanti akan muncul di dashboard.
+kemudian pada folder filament->widgets file teswidget, tambahkan ini di return nya : 
+Stat::make('New Users', User::count())
+->description('New users that have joined')   -> nanti akan memunculkan jumlah usernya di dashboard
+
+kemudian pada adminpanelprovider, di widgets, tambahkan ini : TestWidget::class,
