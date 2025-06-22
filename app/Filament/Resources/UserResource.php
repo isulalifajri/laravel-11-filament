@@ -6,6 +6,7 @@ use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -28,6 +29,7 @@ class UserResource extends Resource
                 TextInput::make('name')->required(),
                 TextInput::make('email')->email(),
                 TextInput::make('password')->password()->revealable()->visibleOn('create'),
+                Select::make('role')->options(User::ROLES)->required(),
             ]);
     }
 
@@ -35,8 +37,21 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name'),
-                TextColumn::make('email'),
+                TextColumn::make('name')
+                ->searchable(),
+                TextColumn::make('email')
+                ->searchable(),
+                TextColumn::make('created_at')
+                ->dateTime()
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('updated_at')
+                ->dateTime()
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('role')
+                ->sortable()
+                ->searchable(),
             ])
             ->filters([
                 //

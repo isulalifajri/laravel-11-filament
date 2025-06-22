@@ -49,3 +49,9 @@ di CategoryResource pada fucntion getRelation tambahkan in : PostRelationManager
 copy isi form pada postResource dan salin ke postsRelationManager -> hapus category_id 
 
 php artisan migrate:refresh --step=1 //artinya merefresh tabel yang terakhir ditambahkan //rollback 1 step yang terbaru
+
+#Authorization
+
+php artisan make:policy CategoryPolicy --model=Category
+
+

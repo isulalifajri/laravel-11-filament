@@ -15,10 +15,30 @@ class User extends Authenticatable implements FilamentUser
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    const ROLE_ADMIN = 'ADMIN';
+    const ROLE_EDITOR = 'EDITOR';
+    const ROLE_USER = 'USER';
+    const ROLE_DEFAULT = self::ROLE_USER;
+
+    const ROLES = [
+        self::ROLE_ADMIN => 'Admin',
+        self::ROLE_EDITOR => 'Editor',
+        self::ROLE_USER => 'User',
+    ];
+
     public function canAccessPanel(Panel $panel): bool
     {
         return true;
         // return $this->email === 'admin@example.com';
+    }
+
+    public function isAdmin()
+    {
+        return $this->role === self::ROLE_ADMIN;
+    }
+    public function isEditor()
+    {
+        return $this->role === self::ROLE_EDITOR;
     }
 
     /**
@@ -30,6 +50,7 @@ class User extends Authenticatable implements FilamentUser
         'name',
         'email',
         'password',
+        'role'
     ];
 
     /**

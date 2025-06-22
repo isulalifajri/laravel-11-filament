@@ -25,6 +25,8 @@ class CategoryResource extends Resource
 
     protected static ?string $modelLabel = 'Post Categories';
 
+    protected static bool $shouldSkipAuthorization = true; //skip authorization
+
     public static function form(Form $form): Form
     {
         return $form
