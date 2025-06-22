@@ -54,4 +54,6 @@ php artisan migrate:refresh --step=1 //artinya merefresh tabel yang terakhir dit
 
 php artisan make:policy CategoryPolicy --model=Category
 
+#navigation Grub// atau membuat submenu
 
+protected static ?string $navigationGroup = namagGroup; -> ini di copy ke resource yang ingin dimasukkan kedalam groupnya. misalkan post resource dan category resource. copy code itu di post dan category resource tepat di bawah navagation icon. 
