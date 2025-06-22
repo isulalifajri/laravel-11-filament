@@ -16,6 +16,7 @@ use App\Filament\Resources\CategoryResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\CategoryResource\RelationManagers;
 use App\Filament\Resources\CategoryResource\RelationManagers\PostsRelationManager;
+use Filament\Forms\Set;
 
 class CategoryResource extends Resource
 {
@@ -31,16 +32,27 @@ class CategoryResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name')
-                ->required()->live(debounce:500)
-                ->afterStateUpdated(function (callable $set, $state){
-                    $slug = Str::slug($state);
-                    $originalSlug = $slug;
-                    $i = 1;
-                    while (Category::where('slug',$slug)->exists()){
-                        $slug = $originalSlug . '-' . $i++;
+                // TextInput::make('name')
+                // ->required()->live(debounce:500)
+                // ->afterStateUpdated(function (callable $set, $state){
+                //     $slug = Str::slug($state);
+                //     $originalSlug = $slug;
+                //     $i = 1;
+                //     while (Category::where('slug',$slug)->exists()){
+                //         $slug = $originalSlug . '-' . $i++;
+                //     }
+                //     $set('slug',$slug);
+                // }),
+
+                TextInput::make('name')->required()->minLength(1)->maxLength(150)
+                ->live(onBlur:true)
+                ->afterStateUpdated(function (string $operation, $state, Set $set,Category $category){
+                    // dump($operation); //edit,create
+                    if($operation == 'edit'){
+                        return;
                     }
-                    $set('slug',$slug);
+                    $set('slug', Str::slug($state));
+                    // dump($category);
                 }),
                 TextInput::make('slug')->unique(Category::class,'slug', ignoreRecord:true)->readOnly(),
             ]);
