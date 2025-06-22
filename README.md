@@ -50,11 +50,11 @@ copy isi form pada postResource dan salin ke postsRelationManager -> hapus categ
 
 php artisan migrate:refresh --step=1 //artinya merefresh tabel yang terakhir ditambahkan //rollback 1 step yang terbaru
 
-#Authorization
+# Authorization
 
 php artisan make:policy CategoryPolicy --model=Category
 
-#navigation Grub// atau membuat submenu
+# navigation Grub// atau membuat submenu
 
 protected static ?string $navigationGroup = namagGroup; -> ini di copy ke resource yang ingin dimasukkan kedalam groupnya. misalkan post resource dan category resource. copy code itu di post dan category resource tepat di bawah navagation icon.
 
@@ -62,7 +62,7 @@ protected static ?int $navigationSort = null; -> mengatur urutan menu
 
 contoh jika di post resource gini -> protected static ?int $navigationSort = 1; -> maka menunya akan paling atas
 
-#statsWidget
+# statsWidget
 
 php artisan make:filament-widget TestWidget
 
@@ -74,7 +74,7 @@ Stat::make('New Users', User::count())
 
 kemudian pada adminpanelprovider, di widgets, tambahkan ini : TestWidget::class,
 
-#Charts
+# Charts
 
 php artisan make:filament-widget TestChartWidget
 choose -> chart -> enter -> enter lagi -> admin panel -> line chart
@@ -84,3 +84,17 @@ composer require flowframe/laravel-trend
 jangan lupa ini di aktifkan di php.ini
 
 extension=intl
+
+# Global Dashbaord
+buat folder dengan nama page di dalam folder Filament, kemudian buat folder Dashboard.php
+
+isi ini didalamnya
+<?php
+
+namespace App\Filament\Pages;
+
+class Dashboard extends \Filament\Pages\Dashboard
+{
+    //
+}
+
