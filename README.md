@@ -102,3 +102,31 @@ class Dashboard extends \Filament\Pages\Dashboard
 contoh ini untuk users
 
 php artisan make:filament-widget -> UserStatsWidget -> Stats overview -> UserResource -> admin panel
+
+# Export to CSV dan Excel
+
+*Laravel 11 and higher
+php artisan make:queue-batches-table
+php artisan make:notifications-table
+
+jika already axist
+
+jalankan ini:
+
+# All apps
+php artisan vendor:publish --tag=filament-actions-migrations
+php artisan migrate
+
+kemudian jika ingin menggunakan export nya di tabel user, jalankan ini:
+php artisan make:filament-exporter User
+
+pada user resource tambahkan ini
+
+ ->headerActions([
+    ExportAction::make()->exporter(UserExporter::class)
+])
+
+tepat di bawah action,
+jangan lupa difile userExporter isi attribute yang ingin di export
+
+kemudian pada adminPanelProvider tambahkan ini : ->databasenofitications()
