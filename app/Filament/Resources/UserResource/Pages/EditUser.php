@@ -2,9 +2,10 @@
 
 namespace App\Filament\Resources\UserResource\Pages;
 
-use App\Filament\Resources\UserResource;
 use Filament\Actions;
+use App\Filament\Resources\UserResource;
 use Filament\Resources\Pages\EditRecord;
+use App\Filament\Resources\UserResource\Widgets\UserStatsWidget;
 
 class EditUser extends EditRecord
 {
@@ -14,6 +15,13 @@ class EditUser extends EditRecord
     {
         return [
             Actions\DeleteAction::make(),
+        ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            UserStatsWidget::class,
         ];
     }
 }

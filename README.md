@@ -98,3 +98,7 @@ class Dashboard extends \Filament\Pages\Dashboard
     //
 }
 
+# add widgets to resource pages
+contoh ini untuk users
+
+php artisan make:filament-widget -> UserStatsWidget -> Stats overview -> UserResource -> admin panel
