@@ -89,7 +89,7 @@ extension=intl
 buat folder dengan nama page di dalam folder Filament, kemudian buat folder Dashboard.php
 
 isi ini didalamnya
-<?php
+```<?php
 
 namespace App\Filament\Pages;
 
